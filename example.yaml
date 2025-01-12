@@ -1,0 +1,44 @@
+agents:
+  - name: ExampleAgent
+    llm_provider: openai
+    llm_model_name: gpt-4o-mini
+    chain_type: LLMChain
+    prompt: "Hello from LLMChain! This is a simple prompt example."
+    memory:
+      type: ConversationBufferMemory
+      memory_key: chat_history
+
+  - name: RetrievalAgent
+    llm_provider: openai
+    llm_model_name: gpt-4o-mini
+    chain_type: ConversationalRetrievalChain
+    vectorstore_type: faiss
+    vectorstore_info:
+      index_path: "./faiss_index"
+    memory:
+      type: ConversationBufferMemory
+      memory_key: chat_history
+
+  - name: QASourceAgent
+    llm_provider: openai
+    llm_model_name: gpt-4o-mini
+    chain_type: QAWithSourcesChain
+    vectorstore_type: faiss
+    vectorstore_info:
+      index_path: "./faiss_index"
+    # 필요한 경우 메모리 사용
+    # memory:
+    #   type: ConversationBufferMemory
+    #   memory_key: chat_history
+
+  - name: SummarizeAgent
+    llm_provider: openai
+    llm_model_name: gpt-4o-mini
+    chain_type: SummarizeChain
+
+  - name: ToolAgent
+    llm_provider: openai
+    llm_model_name: gpt-4o-mini
+    chain_type: ToolUsingAgent
+    tools:
+      - type: CalculatorTool
